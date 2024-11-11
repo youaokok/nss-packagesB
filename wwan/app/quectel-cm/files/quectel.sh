@@ -122,7 +122,15 @@ proto_quectel_setup() {
 	sleep 5
 
 	ifconfig "$ifname" up
-	ifconfig "${ifname}_1" &>"/dev/null" && ifname4="${ifname}_1"
+
+ 	# If $ifname_1 is not a valid device set $ifname4 to base $ifname as fallback
+  	# so modems not using RMNET/QMAP data aggregation still set up properly. QMAP
+   	# can be set via qmap_mode=n parameter during qmi_wwan_q module loading.
+ 	if [ ifconfig "${ifname}_1" &>"/dev/null" ]; then
+ 		ifname4="${ifname}_1"
+   	else
+    		ifname4="$ifname"
+      	fi
 	
 	if [ "$multiplexing" = 1 ]; then
 		ifconfig "${ifname}_2" &>"/dev/null" && ifname6="${ifname}_2"
@@ -148,7 +156,7 @@ proto_quectel_setup() {
 
 		json_init
 		json_add_string name "${interface}_6"
-		json_add_string ifname "@$interface"
+		json_add_string device "$ifname6"
 		[ "$pdptype" = "ipv4v6" ] && json_add_string iface_464xlat "0"
 		json_add_string proto "dhcpv6"
 		proto_add_dynamic_defaults
@@ -165,7 +173,7 @@ proto_quectel_setup() {
 	if [ "$pdptype" = "ipv4" ] || [ "$pdptype" = "ipv4v6" ]; then
 		json_init
 		json_add_string name "${interface}_4"
-		json_add_string ifname "@$interface"
+		json_add_string device "$ifname4"
 		json_add_string proto "dhcp"
 		[ -z "$ip4table" ] || json_add_string ip4table "$ip4table"
 		proto_add_dynamic_defaults

@@ -1,0 +1,97 @@
+Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_core.c
+===================================================================
+--- wrt_relese.orig/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_core.c
++++ wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_core.c
+@@ -38,6 +38,7 @@
+ #endif
+ #endif
+ #include <linux/etherdevice.h>
++#include <linux/skbuff_ref.h>
+ #include "nss_tx_rx_common.h"
+ 
+ #ifdef NSS_DATA_PLANE_GENERIC_SUPPORT
+@@ -65,7 +66,7 @@
+ (((LINUX_VERSION_CODE >= KERNEL_VERSION(4, 4, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(4, 5, 0)))) || \
+ (((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(5, 5, 0)))) || \
+ (((LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(5, 16, 0)))) || \
+-(((LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(6, 8, 0))))))
++(((LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0)) && (LINUX_VERSION_CODE < KERNEL_VERSION(6, 13, 0))))))
+ #error "Check skb recycle code in this file to match Linux version"
+ #endif
+ 
+Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/Makefile
+===================================================================
+--- wrt_relese.orig/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/Makefile
++++ wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/Makefile
+@@ -598,7 +598,7 @@ ccflags-y += -I$(obj)/nss_hal/include -I
+ 
+ ccflags-y += -I$(obj)/nss_data_plane/hal/include
+ ccflags-y += -DNSS_PM_DEBUG_LEVEL=0 -DNSS_SKB_REUSE_SUPPORT=1
+-ccflags-y += -Wall -Werror
++ccflags-y += -Wall -Werror -Wno-missing-declarations -Wno-missing-prototypes -Wno-incompatible-pointer-types
+ 
+ KERNELVERSION := $(word 1, $(subst ., ,$(KERNELVERSION))).$(word 2, $(subst ., ,$(KERNELVERSION)))
+ 
+Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_coredump.c
+===================================================================
+--- wrt_relese.orig/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_coredump.c
++++ wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_coredump.c
+@@ -113,8 +113,9 @@ static int nss_panic_handler(struct noti
+ 		}
+ 	} while (timed++ < nss_top_main.num_nss * 2);
+ 
+-	if (timed >= nss_top_main.num_nss * 2)
+-		nss_warning("might get %d FW dumped", dumped);
++    if (timed >= nss_top_main.num_nss * 2) {
++        nss_warning("might get %d FW dumped", dumped);     
++    }
+ 
+ 	return	NOTIFY_DONE;
+ }
+Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_init.c
+===================================================================
+--- wrt_relese.orig/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_init.c
++++ wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_init.c
+@@ -123,9 +123,9 @@ static inline int nss_probe(struct platf
+  * nss_remove()
+  *	HLOS device remove callback
+  */
+-static inline int nss_remove(struct platform_device *nss_dev)
++static inline void nss_remove(struct platform_device *nss_dev)
+ {
+-	return nss_hal_remove(nss_dev);
++	nss_hal_remove(nss_dev);
+ }
+ 
+ #if (NSS_DT_SUPPORT == 1)
+Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_stats.c
+===================================================================
+--- wrt_relese.orig/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_stats.c
++++ wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_stats.c
+@@ -228,7 +228,7 @@ size_t nss_stats_banner(char *lbuf, size
+ 		size_wr += scnprintf(lbuf + size_wr, size_al - size_wr, "<");
+ 	}
+ 
+-	strlcpy(node_upr, node, NSS_STATS_NODE_NAME_MAX);
++	strncpy(node_upr, node, strlen(node));
+ 	for (i = 0; node_upr[i] != '\0' && i < NSS_STATS_NODE_NAME_MAX; i++) {
+ 		node_upr[i] = toupper(node_upr[i]);
+ 	}
+@@ -293,7 +293,7 @@ size_t nss_stats_print(char *node, char
+ 			continue;
+ 		}
+ 
+-		strlcpy(stats_string, stats_info[i].stats_name, NSS_STATS_MAX_STR_LENGTH);
++		strncpy(stats_string, stats_info[i].stats_name, strlen(stats_info[i].stats_name));
+ 
+ 		/*
+ 		 * Converting  uppercase to lower case.
+@@ -302,7 +302,7 @@ size_t nss_stats_print(char *node, char
+ 			stats_string[j] = tolower(stats_string[j]);
+ 		}
+ 
+-		strlcpy(node_lwr, node, NSS_STATS_NODE_NAME_MAX);
++		strncpy(node_lwr, node, strlen(node));
+ 		for (j = 0; node_lwr[j] != '\0' && j < NSS_STATS_NODE_NAME_MAX; j++) {
+ 			node_lwr[j] = tolower(node_lwr[j]);
+ 		}

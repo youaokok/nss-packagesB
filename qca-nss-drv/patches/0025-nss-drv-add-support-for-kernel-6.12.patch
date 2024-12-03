@@ -1,5 +1,3 @@
-Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_core.c
-===================================================================
 --- a/nss_core.c
 +++ b/nss_core.c
 @@ -38,6 +38,7 @@
@@ -19,8 +17,6 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  #error "Check skb recycle code in this file to match Linux version"
  #endif
  
-Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/Makefile
-===================================================================
 --- a/Makefile
 +++ b/Makefile
 @@ -598,7 +598,7 @@ ccflags-y += -I$(obj)/nss_hal/include -I
@@ -32,8 +28,6 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  
  KERNELVERSION := $(word 1, $(subst ., ,$(KERNELVERSION))).$(word 2, $(subst ., ,$(KERNELVERSION)))
  
-Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_coredump.c
-===================================================================
 --- a/nss_coredump.c
 +++ b/nss_coredump.c
 @@ -113,8 +113,9 @@ static int nss_panic_handler(struct noti
@@ -48,8 +42,6 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  
  	return	NOTIFY_DONE;
  }
-Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_init.c
-===================================================================
 --- a/nss_init.c
 +++ b/nss_init.c
 @@ -123,9 +123,9 @@ static inline int nss_probe(struct platf
@@ -64,8 +56,6 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  }
  
  #if (NSS_DT_SUPPORT == 1)
-Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq60xx/qca-nss-drv-12.5.2024.04.06~53a0dc1/nss_stats.c
-===================================================================
 --- a/nss_stats.c
 +++ b/nss_stats.c
 @@ -228,7 +228,7 @@ size_t nss_stats_banner(char *lbuf, size
@@ -73,7 +63,7 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  	}
  
 -	strlcpy(node_upr, node, NSS_STATS_NODE_NAME_MAX);
-+	strncpy(node_upr, node, strlen(node));
++	strscpy(node_upr, node, NSS_STATS_NODE_NAME_MAX);
  	for (i = 0; node_upr[i] != '\0' && i < NSS_STATS_NODE_NAME_MAX; i++) {
  		node_upr[i] = toupper(node_upr[i]);
  	}
@@ -82,7 +72,7 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  		}
  
 -		strlcpy(stats_string, stats_info[i].stats_name, NSS_STATS_MAX_STR_LENGTH);
-+		strncpy(stats_string, stats_info[i].stats_name, strlen(stats_info[i].stats_name));
++		strscpy(stats_string, stats_info[i].stats_name, NSS_STATS_MAX_STR_LENGTH);
  
  		/*
  		 * Converting  uppercase to lower case.
@@ -91,7 +81,7 @@ Index: wrt_relese/test/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax
  		}
  
 -		strlcpy(node_lwr, node, NSS_STATS_NODE_NAME_MAX);
-+		strncpy(node_lwr, node, strlen(node));
++		strscpy(node_lwr, node, NSS_STATS_NODE_NAME_MAX);
  		for (j = 0; node_lwr[j] != '\0' && j < NSS_STATS_NODE_NAME_MAX; j++) {
  			node_lwr[j] = tolower(node_lwr[j]);
  		}

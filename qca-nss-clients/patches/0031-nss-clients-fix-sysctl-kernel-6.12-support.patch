@@ -1,0 +1,76 @@
+--- a/bridge/nss_bridge_mgr.c
++++ b/bridge/nss_bridge_mgr.c
+@@ -1594,7 +1594,6 @@ static struct ctl_table nss_bridge_mgr_t
+ 		.mode           = 0644,
+ 		.proc_handler   = &nss_bridge_mgr_wan_intf_del_handler,
+ 	},
+-	{ }
+ };
+ 
+ /*
+--- a/l2tp/l2tpv2/nss_connmgr_l2tpv2.c
++++ b/l2tp/l2tpv2/nss_connmgr_l2tpv2.c
+@@ -980,7 +980,6 @@ static struct ctl_table nss_connmgr_l2tp
+ 		.mode		= 0644,
+ 		.proc_handler	= &nss_connmgr_l2tpv2_proc_handler,
+ 	},
+-	{ }
+ };
+ 
+ /*
+@@ -992,7 +991,6 @@ static struct ctl_table nss_connmgr_l2tp
+ 		.mode			= 0555,
+ 		.child			= nss_connmgr_l2tpv2_table,
+ 	},
+-	{ }
+ };
+ 
+ /*
+@@ -1004,7 +1002,6 @@ static struct ctl_table nss_connmgr_l2tp
+ 		.mode			= 0555,
+ 		.child			= nss_connmgr_l2tpv2_dir,
+ 	},
+-	{ }
+ };
+ #endif
+ 
+--- a/match/nss_match_cmd.c
++++ b/match/nss_match_cmd.c
+@@ -689,7 +689,6 @@ static struct ctl_table nss_match_table[
+ 		.mode			= 0400,
+ 		.proc_handler		= &nss_match_cmd_procfs_read_help,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_match_ctl_header;
+--- a/mirror/nss_mirror_ctl.c
++++ b/mirror/nss_mirror_ctl.c
+@@ -915,7 +915,6 @@ static struct ctl_table nss_mirror_table
+ 		.mode		= 0644,
+ 		.proc_handler	= &nss_mirror_ctl_config_handler,
+ 	},
+-	{ }
+ };
+ 
+ /*
+--- a/tunipip6/nss_connmgr_tunipip6_sysctl.c
++++ b/tunipip6/nss_connmgr_tunipip6_sysctl.c
+@@ -446,7 +446,6 @@ static struct ctl_table nss_tunipip6_tab
+ 		.mode			= 0400,
+ 		.proc_handler		= &nss_tunipip6_cmd_procfs_read_help,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_tunipip6_ctl_header;
+--- a/vlan/nss_vlan_mgr.c
++++ b/vlan/nss_vlan_mgr.c
+@@ -1578,7 +1578,6 @@ static struct ctl_table nss_vlan_table[]
+ 		.mode		= 0644,
+ 		.proc_handler	= &nss_vlan_mgr_tpid_proc_handler,
+ 	},
+-	{ }
+ };
+ 
+ /*

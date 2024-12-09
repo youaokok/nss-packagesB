@@ -1,0 +1,135 @@
+--- a/nss_c2c_tx.c
++++ b/nss_c2c_tx.c
+@@ -331,7 +331,6 @@ static struct ctl_table nss_c2c_tx_table
+ 		.mode		= 0644,
+ 		.proc_handler	= &nss_c2c_tx_performance_test_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_c2c_tx_header;
+--- a/nss_dma.c
++++ b/nss_dma.c
+@@ -375,7 +375,6 @@ static struct ctl_table nss_dma_table[]
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_dma_header;
+--- a/nss_init.c
++++ b/nss_init.c
+@@ -503,7 +503,6 @@ static struct ctl_table nss_skb_reuse_ta
+ 		.mode			= 0644,
+ 		.proc_handler	= &nss_max_reuse_handler,
+ 	},
+-	{ }
+ };
+ #endif
+ 
+@@ -540,7 +539,6 @@ static struct ctl_table nss_freq_table[]
+ 		.mode			= 0644,
+ 		.proc_handler	= &nss_get_average_inst_handler,
+ 	},
+-	{ }
+ };
+ #endif
+ 
+@@ -589,7 +587,6 @@ static struct ctl_table nss_general_tabl
+ 		.mode                   = 0644,
+ 		.proc_handler           = &nss_paged_mode_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_clock_header;
+--- a/nss_ipv4.c
++++ b/nss_ipv4.c
+@@ -709,7 +709,6 @@ static struct ctl_table nss_ipv4_table[]
+ 		.mode		= 0644,
+ 		.proc_handler	= &nss_ipv4_dscp_map_cfg_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_ipv4_header;
+--- a/nss_ipv6.c
++++ b/nss_ipv6.c
+@@ -704,7 +704,6 @@ static struct ctl_table nss_ipv6_table[]
+ 		.mode			= 0644,
+ 		.proc_handler		= &nss_ipv6_dscp_map_cfg_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_ipv6_header;
+--- a/nss_n2h.c
++++ b/nss_n2h.c
+@@ -1741,8 +1741,6 @@ static struct ctl_table nss_n2h_table_si
+ 		.mode			= 0644,
+ 		.proc_handler	= &nss_n2h_get_qos_mem_size_cfg_handler,
+ 	},
+-
+-	{ }
+ };
+ 
+ static struct ctl_table nss_n2h_table_multi_core[] = {
+@@ -1901,7 +1899,6 @@ static struct ctl_table nss_n2h_table_mu
+ 		.mode			= 0644,
+ 		.proc_handler	= &nss_n2h_get_qos_mem_size_cfg_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_n2h_header;
+--- a/nss_ppe_vp.c
++++ b/nss_ppe_vp.c
+@@ -780,7 +780,6 @@ static struct ctl_table nss_ppe_vp_table
+ 		.mode           = 0644,
+ 		.proc_handler   = &nss_ppe_vp_destroy_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_ppe_vp_procfs_header;
+--- a/nss_pppoe.c
++++ b/nss_pppoe.c
+@@ -350,7 +350,6 @@ static struct ctl_table nss_pppoe_table[
+ 		.mode                   = 0644,
+ 		.proc_handler           = &nss_pppoe_br_accel_mode_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_pppoe_header;
+--- a/nss_project.c
++++ b/nss_project.c
+@@ -330,7 +330,6 @@ static struct ctl_table nss_project_tabl
+ 		.mode			= 0644,
+ 		.proc_handler		= &nss_project_wt_stats_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_project_header;
+--- a/nss_rps.c
++++ b/nss_rps.c
+@@ -574,7 +574,6 @@ static struct ctl_table nss_rps_table[]
+ 		.mode		= 0644,
+ 		.proc_handler	= &nss_rps_pri_map_cfg_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_rps_header;
+--- a/nss_stats.c
++++ b/nss_stats.c
+@@ -85,7 +85,6 @@ static struct ctl_table nss_stats_table[
+ 		.mode			= 0644,
+ 		.proc_handler		= &nss_stats_nonzero_handler,
+ 	},
+-	{ }
+ };
+ 
+ static struct ctl_table_header *nss_stats_header;

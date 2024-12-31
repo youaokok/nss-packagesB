@@ -49,7 +49,8 @@ EXTRA_CFLAGS+= \
 	-I$(STAGING_DIR)/usr/include/qca-nss-crypto \
 	-I$(STAGING_DIR)/usr/include/qca-nss-drv \
 	-I$(PKG_BUILD_DIR)/$(NSS_CRYPTO_DIR)/include \
-	-I$(PKG_BUILD_DIR)/$(NSS_CRYPTO_DIR)/src
+	-I$(PKG_BUILD_DIR)/$(NSS_CRYPTO_DIR)/src \
+	-Wno-missing-declarations -Wno-missing-prototypes
 
 ifeq ($(CONFIG_TARGET_BOARD), "qualcommax")
 	SOC:=$(CONFIG_TARGET_SUBTARGET)

@@ -85,3 +85,23 @@
  		for (j = 0; node_lwr[j] != '\0' && j < NSS_STATS_NODE_NAME_MAX; j++) {
  			node_lwr[j] = tolower(node_lwr[j]);
  		}
+--- a/nss_crypto_cmn_stats.c
++++ b/nss_crypto_cmn_stats.c
+@@ -17,6 +17,7 @@
+ #include "nss_core.h"
+ #include "nss_crypto_cmn_stats.h"
+ #include "nss_crypto_cmn_strings.h"
++#include <linux/vmalloc.h>
+ 
+ /*
+  * Declare atomic notifier data structure for statistics.
+--- a/nss_dma_stats.c
++++ b/nss_dma_stats.c
+@@ -20,6 +20,7 @@
+ #include "nss_dma.h"
+ #include "nss_dma_stats.h"
+ #include "nss_dma_strings.h"
++#include <linux/vmalloc.h>
+ 
+ /*
+  * Declare atomic notifier data structure for statistics.

@@ -1,0 +1,63 @@
+--- a/v2.0/src/nss_crypto_ctrl.c
++++ b/v2.0/src/nss_crypto_ctrl.c
+@@ -1573,11 +1573,10 @@ static int nss_crypto_device_probe(struc
+  * nss_crypto_device_remove()
+  *	remove crypto device and deregister everything
+  */
+-static int nss_crypto_device_remove(struct platform_device *pdev)
++static void nss_crypto_device_remove(struct platform_device *pdev)
+ {
+ 	nss_crypto_hw_deinit(pdev);
+ 	nss_crypto_node_free(platform_get_drvdata(pdev));
+-	return 0;
+ };
+ 
+ /*
+@@ -1654,7 +1653,7 @@ static int nss_crypto_probe(struct platf
+  * nss_crypto_remove()
+  *	remove the crypto driver
+  */
+-static int nss_crypto_remove(struct platform_device *pdev)
++static void nss_crypto_remove(struct platform_device *pdev)
+ {
+ 	struct nss_crypto_ctrl *ctrl = platform_get_drvdata(pdev);
+ 
+@@ -1668,7 +1667,6 @@ static int nss_crypto_remove(struct plat
+ 	 * Clear the active state of driver
+ 	 */
+ 	ctrl->active = false;
+-	return 0;
+ }
+ 
+ /*
+--- a/v2.0/tool/nss_crypto_bench.c
++++ b/v2.0/tool/nss_crypto_bench.c
+@@ -980,7 +980,7 @@ int __init crypto_bench_init(void)
+ 
+ 	ctx->attach = crypto_bench_attach;
+ 	ctx->detach = crypto_bench_detach;
+-	strlcpy(ctx->name, "bench", sizeof(ctx->name));
++	strscpy(ctx->name, "bench", sizeof(ctx->name));
+ 	ctx->hdr_pool_sz = 1024;
+ 	ctx->default_hdr_sz = 512;
+ 	ctx->timeout_ticks = 1;
+--- a/v2.0/src/hal/ipq60xx/nss_crypto_eip197.h
++++ b/v2.0/src/hal/ipq60xx/nss_crypto_eip197.h
+@@ -20,6 +20,7 @@
+ #define __NSS_CRYPTO_EIP197_H
+ 
+ #include <linux/types.h>
++#include <linux/fs.h>
+ 
+ /*
+  * Common configuration data for command and result
+--- a/v2.0/src/hal/ipq60xx/nss_crypto_hw.c
++++ b/v2.0/src/hal/ipq60xx/nss_crypto_hw.c
+@@ -16,6 +16,7 @@
+  */
+ 
+ #include <linux/of_platform.h>
++#include <linux/of.h>
+ #include "nss_crypto_eip197.h"
+ 
+ /*

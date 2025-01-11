@@ -82,7 +82,7 @@ define Package/nss-firmware-default/config
                This version does NOT work with NSS MESH (802.11s)
 
     config NSS_FIRMWARE_VERSION_12_1
-          bool "NSS Firmware 12.1 Release 003"
+          bool "NSS Firmware 12.1 Release 002"
           help
                This version does NOT work with NSS MESH (802.11s)
 
@@ -95,15 +95,15 @@ define Package/nss-firmware-default/config
 endef
 
 ifneq ($(CONFIG_NSS_FIRMWARE_VERSION_11_4),)
-   NSS_MAJOR=11
-   NSS_MINOR=4
-   NSS_REL=6
-   VERSION_PATH=$(PKG_BUILD_DIR)/QCA_Networking_2021.SPF_$(NSS_MAJOR).$(NSS_MINOR)/CS
-else ifneq ($(CONFIG_NSS_FIRMWARE_VERSION_12_1),)
-   NSS_MAJOR=12
-   NSS_MINOR=1
-   NSS_REL=003
-   VERSION_PATH=$(PKG_BUILD_DIR)/QCA_Networking_2022.SPF_$(NSS_MAJOR).$(NSS_MINOR)/ED1
+   NSS_MAJOR:=11.4
+   NSS_MINOR:=11.4.0.5
+   NSS_REL:=5
+   VERSION_PATH=$(PKG_BUILD_DIR)/QCA_Networking_2021.SPF_$(NSS_MAJOR)/CS
+else
+   NSS_MAJOR:=12.0.0
+   NSS_MINOR:=12.1
+   NSS_REL:=022
+   VERSION_PATH=$(PKG_BUILD_DIR)/QCA_Networking_2022.SPF_$(NSS_MAJOR)/ED1
 else ifneq ($(CONFIG_NSS_FIRMWARE_VERSION_12_2),)
    NSS_MAJOR=12
    NSS_MINOR=2
